@@ -6,6 +6,22 @@ const mongoose = require("mongoose");
 const Tasklist = require("../model/task.model"); // Import the Task model
 const { authenticateUser, requireRole } = require("../middleware/auth");
 // POST route to add a new task
+taskrouter.get("/:taskId", async (req, res) => {
+  const taskId = req.params.taskId;
+
+  try {
+    const task = await Tasklist.findById(taskId).exec();
+
+    if (task) {
+      res.json(task);
+    } else {
+      res.status(404).json({ message: "Task not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching task by taskId:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 taskrouter.post(
   "/create",
   authenticateUser,
