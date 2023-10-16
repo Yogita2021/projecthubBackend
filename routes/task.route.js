@@ -18,7 +18,7 @@ taskrouter.get("/:taskId", async (req, res) => {
       res.status(404).json({ message: "Task not found" });
     }
   } catch (error) {
-    console.error("Error fetching task by taskId:", error);
+    console.error("Error fetching task by taskId:", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 });
